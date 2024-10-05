@@ -16,6 +16,4 @@ public class DBContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
-
-    public DbSet<Trainee_Test.Models.PersonDTO> PersonDTO { get; set; } = default!;
 }
