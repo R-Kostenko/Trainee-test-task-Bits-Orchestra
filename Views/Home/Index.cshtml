@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Trainee_Test.Models.PersonDTO>
+
+@{
+    ViewData["Title"] = "Contact Manager";
+}
+
+<h1>Contact Manager</h1>
+
+<div class="add-data-section mt-3">
+    <form class="date-upload-form" asp-action="Upload" enctype="multipart/form-data" method="post">
+        <label>Upload dataset (.csv):</label>
+        <input type="file" name="file" class="form-control" accept=".csv" />
+        <input type="submit" value="Upload" class="btn btn-primary" />
+    </form>
+
+    <a asp-action="Create">Create new Record</a>
+</div>
+
+
+<table id="recordsTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col" onclick="sortTable(0)">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th scope="col" onclick="sortTable(1)">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th scope="col" onclick="sortTable(2)">
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th scope="col" onclick="sortTable(3)">
+                @Html.DisplayNameFor(model => model.MaritalStatus)
+            </th>
+            <th scope="col" onclick="sortTable(4)">
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th scope="col" onclick="sortTable(5)">
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+        <tr>
+            <th><input class="form-control" type="text" id="filterInput1" onkeyup="filterTable()" placeholder="Id"></th>
+            <th><input class="form-control" type="text" id="filterInput2" onkeyup="filterTable()" placeholder="Name"></th>
+            <th><input class="form-control" type="text" id="filterInput3" onkeyup="filterTable()" placeholder="Date of Birth"></th>
+            <th><input class="form-control" type="text" id="filterInput4" onkeyup="filterTable()" placeholder="Marital Status"></th>
+            <th><input class="form-control" type="text" id="filterInput5" onkeyup="filterTable()" placeholder="Phone"></th>
+            <th><input class="form-control" type="text" id="filterInput6" onkeyup="filterTable()" placeholder="Salary"></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @item.DateOfBirth.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaritalStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salary)
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a href="javascript:void(0);" onclick="deletePerson(@item.Id)">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
